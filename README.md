@@ -2,7 +2,7 @@
 django bootstrap sqlite
 
 download zip file or clone it using git
-extract the file or go the cloned directory 
+extract the file or go to the cloned directory 
 open the code in IDE then open terminal
 pip install django 
 pip install pilow 
