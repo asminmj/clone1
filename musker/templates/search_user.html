@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<h1>Search Users!</h1>
+<br/>
+	
+
+<form  method=POST>
+{% csrf_token %}
+<input type="input" class="form-control"  placeholder="Search Meeps" name="search">
+<br/><br/>
+  <button type="submit" class="btn btn-secondary">Search User</button>
+</form>
+
+<br/><br/>
+
+{% if search %}
+<h3>You Searched For: {{ search }}</h3>
+<br/>
+{% endif %}
+
+{% if searched %}
+    {% for result in searched %}
+    <br>
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            {%if result.profile.profile_image %}
+            <br>
+              <img src="{{ result.profile.profile_image.url }}"
+              width="150" height="150" class="rounded-circle"
+              alt="{{ result.profile.user.username }}">
+
+              {% else %}
+              <br>
+              <img src="{% static 'images/default_profile.png' %}"
+              width="150" height="150" class="rounded-circle"
+              alt="{{ profile.user.username }}">
+            {% endif %}
+            
+            
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ result.profile.user.username }}</h5>
+              <p class="card-text"><a href="{% url 'profile' result.profile.user.id %}">
+            @{{ result.profile.user.username|lower }}</a></p>
+              <br><br>
+              
+              <p class="card-text"><small class="text-muted">
+                Last Updated: {{ result.profile.date_modified }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+      {% else %}
+       {% if searched == None %}
+
+        {% else %}
+            The user you searched for does not exist!
+       {% endif %}
+
+
+{% endif %}
+
+<br/><br/>
+{% endblock %}
